@@ -1,0 +1,263 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pamili User Manual</title>
+<style>
+  :root{
+    --paper:#F7F8F6; --card:#FFFFFF; --ink:#1A2433; --ink-soft:#3D4A5C; --ink-faint:#5A6779;
+    --line:#E7E5DD; --navy:#202C46; --navy-deep:#161F35; --on-navy:#FFFFFF; --navy-sub:#B9C4DC;
+    --marigold:#F4A61B; --marigold-deep:#B87A00; --marigold-soft:#FBEED3;
+    --green:#1F7A45; --green-soft:#E2F2E7; --red:#B3372F; --red-soft:#F9E5E2;
+    --chip-bg:#202C46; --chip-fg:#FFFFFF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#141B2E; --card:#1D2842; --ink:#EAEEF6; --ink-soft:#B9C4DC; --ink-faint:#8B99B8;
+      --line:#2C3A5C; --navy:#101728; --navy-deep:#0B111F; --on-navy:#FFFFFF; --navy-sub:#B9C4DC;
+      --marigold:#F4A61B; --marigold-deep:#F4A61B; --marigold-soft:#3B2F14;
+      --green:#5CC98A; --green-soft:#173325; --red:#F08A80; --red-soft:#3A1D1A;
+      --chip-bg:#F4A61B; --chip-fg:#231700;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#141B2E; --card:#1D2842; --ink:#EAEEF6; --ink-soft:#B9C4DC; --ink-faint:#8B99B8;
+    --line:#2C3A5C; --navy:#101728; --navy-deep:#0B111F; --on-navy:#FFFFFF; --navy-sub:#B9C4DC;
+    --marigold:#F4A61B; --marigold-deep:#F4A61B; --marigold-soft:#3B2F14;
+    --green:#5CC98A; --green-soft:#173325; --red:#F08A80; --red-soft:#3A1D1A;
+    --chip-bg:#F4A61B; --chip-fg:#231700;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Devanagari",sans-serif;
+    background:var(--paper); color:var(--ink); margin:0; line-height:1.65;
+  }
+  .wrap{max-width:820px; margin:0 auto; padding:0 20px 60px}
+  header.hero{background:linear-gradient(160deg,var(--navy),var(--navy-deep)); color:var(--on-navy); padding:34px 20px 30px; border-radius:0 0 22px 22px}
+  .hero-inner{max-width:820px; margin:0 auto}
+  .brand{font-size:2.1rem; font-weight:800; letter-spacing:.5px; margin:0}
+  .brand b{color:var(--marigold)}
+  .hero h1{font-size:1.35rem; margin:.4rem 0 0; font-weight:700; text-wrap:balance}
+  .hero .sub{color:var(--navy-sub); font-size:.95rem; margin-top:6px}
+  .helpline{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+  .helpline a{background:rgba(255,255,255,.10); border:1px solid rgba(255,255,255,.22); color:var(--on-navy); text-decoration:none; font-size:.85rem; padding:8px 14px; border-radius:11px; font-weight:600}
+  nav.toc{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:26px 0 8px}
+  nav.toc a{display:block; background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:14px 16px; text-decoration:none; color:var(--ink)}
+  nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--marigold)}
+  nav.toc .who{font-weight:800; font-size:1.02rem}
+  nav.toc .what{color:var(--ink-faint); font-size:.82rem; margin-top:2px}
+  h2.part{
+    font-size:1.5rem; margin:44px 0 4px; padding-top:20px; border-top:3px solid var(--marigold);
+    font-weight:800; text-wrap:balance
+  }
+  h2.part .en{display:block; font-size:.95rem; color:var(--ink-faint); font-weight:600}
+  h3{font-size:1.08rem; margin:28px 0 8px; font-weight:800}
+  h3 .n{display:inline-block; background:var(--chip-bg); color:var(--chip-fg); font-size:.8rem; min-width:26px; height:26px; line-height:26px; text-align:center; border-radius:8px; margin-right:8px; font-variant-numeric:tabular-nums}
+  p{margin:.45rem 0}
+  .en{color:var(--ink-faint)}
+  ol.steps{margin:.4rem 0; padding-left:1.4rem}
+  ol.steps li{margin:.5rem 0}
+  ol.steps li .en{display:block; font-size:.9rem}
+  .note{background:var(--marigold-soft); border-left:4px solid var(--marigold); border-radius:0 12px 12px 0; padding:10px 14px; margin:14px 0; font-size:.95rem}
+  .good{background:var(--green-soft); border-left:4px solid var(--green); border-radius:0 12px 12px 0; padding:10px 14px; margin:14px 0; font-size:.95rem}
+  .warn{background:var(--red-soft); border-left:4px solid var(--red); border-radius:0 12px 12px 0; padding:10px 14px; margin:14px 0; font-size:.95rem}
+  .card{background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:16px 18px; margin:14px 0}
+  table{border-collapse:collapse; width:100%; font-size:.92rem}
+  .tablewrap{overflow-x:auto; margin:12px 0}
+  th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top}
+  th{background:var(--card); font-weight:700}
+  code,kbd{background:var(--card); border:1px solid var(--line); border-radius:6px; padding:1px 6px; font-size:.88em}
+  footer{margin-top:50px; border-top:1px solid var(--line); padding-top:16px; color:var(--ink-faint); font-size:.85rem}
+  a{color:var(--marigold-deep)}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--marigold); outline-offset:2px}
+  @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+</style>
+
+<header class="hero">
+  <div class="hero-inner">
+    <p class="brand">Pam<b>ili</b></p>
+    <h1>इस्तेमाल गाइड — ग्राहक, कारीगर और एडमिन के लिए</h1>
+    <p class="sub">User Manual · v2.0 · अगस्त 2026</p>
+    <div class="helpline">
+      <a href="https://wa.me/917667080324">💬 मदद / Help: WhatsApp +91 76670 80324</a>
+      <a href="https://avisek-code.github.io/pamili-legal/privacy.html">🔒 प्राइवेसी पॉलिसी</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<nav class="toc" aria-label="Sections">
+  <a href="#customer"><span class="who">🙋 ग्राहक / Customer</span><span class="what">काम बुक करना, कोड, भुगतान, रेटिंग</span></a>
+  <a href="#worker"><span class="who">👷 कारीगर / Worker</span><span class="what">रजिस्टर, काम लेना, पैसे, प्रोफ़ाइल</span></a>
+  <a href="#admin"><span class="who">🛡️ Admin</span><span class="what">approvals, disputes, catalog, settings</span></a>
+</nav>
+
+<!-- ================= CUSTOMER ================= -->
+<h2 class="part" id="customer">🙋 ग्राहक के लिए <span class="en">Part 1 — For Customers</span></h2>
+
+<h3><span class="n">1</span>पहली बार ऐप खोलना</h3>
+<p>ऐप खोलते ही प्राइवेसी पॉलिसी दिखेगी — पढ़कर <b>"मैं सहमत हूँ"</b> दबाएँ। यह सिर्फ़ पहली बार पूछा जाता है।</p>
+<p class="en">On first open the privacy policy appears — read it and tap <b>"I agree"</b>. Asked only once.</p>
+
+<h3><span class="n">2</span>रजिस्टर और लॉगिन</h3>
+<ol class="steps">
+  <li>नीचे <b>प्रोफ़ाइल</b> टैब → <b>रजिस्टर करें</b>। <span class="en">Profile tab → Register.</span></li>
+  <li>नाम, 10 अंकों का फ़ोन नंबर और पासवर्ड चुनें। OTP की ज़रूरत नहीं। <span class="en">Name, 10-digit phone number and a password. No OTP needed.</span></li>
+  <li>बिना लॉगिन भी कारीगर और रेट देख सकते हैं — बुक करने के लिए लॉगिन ज़रूरी है। <span class="en">You can browse without logging in — booking needs login.</span></li>
+</ol>
+<div class="note">पासवर्ड भूल गए? लॉगिन स्क्रीन से <b>WhatsApp पर मदद</b> दबाएँ — Pamili टीम नया अस्थायी पासवर्ड उसी नंबर पर भेजेगी।<br><span class="en">Forgot password? Tap "Help on WhatsApp" from the login screen — the team sends a temporary password to your registered number.</span></div>
+
+<h3><span class="n">3</span>अपना इलाक़ा चुनें</h3>
+<ol class="steps">
+  <li>होम स्क्रीन पर सबसे ऊपर 📍 पर टैप करें। <span class="en">Tap 📍 at the top of Home.</span></li>
+  <li>इलाक़ा टाइप करें (जैसे "Gomti Nagar"), या <b>GPS</b> से पता लगाएँ, या हाल के इलाक़ों में से चुनें। <span class="en">Type your area, use GPS, or pick a recent one.</span></li>
+  <li>आपके इलाक़े के कारीगर सबसे पहले दिखेंगे — "आपके पास" के निशान के साथ। <span class="en">Workers serving your exact area appear first, with a "nearby" badge.</span></li>
+</ol>
+<p>अगर आपका शहर अभी Pamili में नहीं है, तो ऐप साफ़ बता देगा — ग़लत वादा नहीं करेगा।</p>
+<p class="en">If your city isn't served yet, the app says so honestly instead of showing far-away workers.</p>
+
+<h3><span class="n">4</span>कारीगर चुनना</h3>
+<ul>
+  <li>🪪 <b>पहचान जाँची गई</b> — Pamili टीम ने ID देखकर मंज़ूरी दी है। <span class="en">ID checked by the Pamili team.</span></li>
+  <li>⭐ रेटिंग और पूरे किए काम असली ग्राहकों से आते हैं। <span class="en">Ratings and job counts come from real customers.</span></li>
+  <li>"₹X से शुरू" = उस कारीगर की सबसे सस्ती सेवा। हर सेवा का दाम प्रोफ़ाइल पर लिखा है। <span class="en">"from ₹X" is their cheapest service; every service shows its price.</span></li>
+</ul>
+
+<h3><span class="n">5</span>बुकिंग करना</h3>
+<ol class="steps">
+  <li>कारीगर की प्रोफ़ाइल खोलें → जो काम चाहिए उन पर <b>+ जोड़ें</b> दबाएँ। <span class="en">Open the worker's profile → tap "+ Add" on each service you need.</span></li>
+  <li><b>बुक करें</b> → दिन और समय-खिड़की चुनें (जैसे 4–6 PM)। ऐप अनुमानित पहुँचने का समय दिखाएगा। <span class="en">Tap Book → pick a day and time window. The app shows an estimated arrival time.</span></li>
+  <li>पूरा पता भरें → <b>ऑर्डर करें</b>। <span class="en">Fill your address → Place order.</span></li>
+</ol>
+<div class="note">📐 <b>नाप वाले काम</b> (प्रति वर्ग फ़ुट, प्रति घंटा…) में दिखी राशि <b>अनुमान</b> है — असली नाप साइट पर होगी और अंतिम राशि काम के बाद तय होगी। 🔍 जिन कामों पर "जाँच के बाद रेट" लिखा है, वहाँ कारीगर पहले छोटी विज़िट फ़ीस पर आकर देखेगा, फिर रेट बताएगा।<br>
+<span class="en">Measured work (per sq ft, per hour…) shows an <b>estimate</b> — the real measurement happens on site. "Quote after inspection" services start with a small visit fee.</span></div>
+
+<h3><span class="n">6</span>बुकिंग के बाद क्या होता है</h3>
+<ul>
+  <li>कारीगर के पास आपका अनुरोध जाता है — उसके पास जवाब देने के लिए सीमित समय (करीब 15 मिनट) है। <span class="en">The worker gets your request and has ~15 minutes to respond.</span></li>
+  <li>जवाब नहीं आया तो बुकिंग अपने आप <b>"कोई जवाब नहीं"</b> हो जाएगी और ऐप आपको दूसरा कारीगर चुनने का रास्ता देगा। <span class="en">No response → the request expires automatically and the app offers you another worker.</span></li>
+  <li>स्वीकार होते ही आपको सूचना मिलेगी और <b>कॉल बटन</b> खुल जाएगा। <span class="en">Once accepted you get a notification and the call button unlocks.</span></li>
+  <li>कारीगर को देर हो रही हो तो वह ऐप से नया समय भेज सकता है — आप मानें या दोबारा बुक करें, आपकी मर्ज़ी। <span class="en">If the worker is delayed they can propose a new time — accept it or rebook, your choice.</span></li>
+</ul>
+
+<h3><span class="n">7</span>शुरू और ख़त्म के कोड — सबसे ज़रूरी बात</h3>
+<div class="card">
+  <p>हर बुकिंग में आपके पास दो <b>4-अंकों के कोड</b> होते हैं (बुकिंग खोलकर देखें):</p>
+  <p>▶️ <b>शुरू कोड</b> — कारीगर दरवाज़े पर आए <b>तब</b> बताएँ। इसी से काम शुरू माना जाता है।<br>
+  ✅ <b>ख़त्म कोड</b> — काम पूरा और सही होने पर <b>ही</b> बताएँ।</p>
+  <p class="en">Every booking gives you two 4-digit codes (open the booking to see them). Give the <b>start code</b> only when the worker arrives; give the <b>end code</b> only when the work is done properly.</p>
+</div>
+<div class="warn">कोड पहले से किसी को न बताएँ — फ़ोन पर भी नहीं। बिना आपके कोड के कोई काम "पूरा" नहीं दिखा सकता। यही आपकी सुरक्षा है।<br><span class="en">Never share the codes in advance — not even on a call. Nothing can be marked done without you. That's your protection.</span></div>
+
+<h3><span class="n">8</span>भुगतान और राशि</h3>
+<ul>
+  <li>भुगतान काम के <b>बाद</b>, सीधे कारीगर को — नक़द या उसके UPI पर। Pamili पैसा अपने पास नहीं रखता। <span class="en">Pay after the work, directly to the worker — cash or UPI. Pamili never holds money.</span></li>
+  <li>काम ख़त्म होने पर कारीगर अंतिम राशि भरता है (नाप वाले काम में असली नाप से)। आपको वह राशि दिखेगी। <span class="en">At completion the worker enters the final amount (from real measurements on measured work).</span></li>
+  <li>राशि ग़लत लगे? बुकिंग खोलकर <b>"राशि ग़लत है?"</b> दबाएँ — Pamili टीम दोनों से बात करके तय करेगी। <span class="en">Amount looks wrong? Tap "Amount wrong?" in the booking — the Pamili team settles it with both sides.</span></li>
+</ul>
+
+<h3><span class="n">9</span>रेटिंग दें</h3>
+<p>काम पूरा होने पर सितारे और चाहें तो टिप्पणी दें। आपकी रेटिंग अगले ग्राहकों की सबसे बड़ी मदद है — और कारीगरों की मेहनत का इनाम।</p>
+<p class="en">After completion, rate with stars and an optional review. Ratings are the next customer's best guide.</p>
+
+<h3><span class="n">10</span>सेटिंग्स</h3>
+<ul>
+  <li><b>भाषा</b>: प्रोफ़ाइल → सेटिंग्स → हिंदी / English। <span class="en">Language: Profile → Settings.</span></li>
+  <li><b>डार्क मोड</b>: वहीं — फ़ोन जैसा, हल्का या गहरा। <span class="en">Theme: system / light / dark.</span></li>
+  <li><b>अकाउंट हटाना</b>: प्रोफ़ाइल → अकाउंट हटाएँ — तुरंत, हमेशा के लिए। <span class="en">Delete account: Profile → Delete account — instant and permanent.</span></li>
+</ul>
+
+<!-- ================= WORKER ================= -->
+<h2 class="part" id="worker">👷 कारीगर के लिए <span class="en">Part 2 — For Workers</span></h2>
+
+<h3><span class="n">1</span>कारीगर बनना</h3>
+<ol class="steps">
+  <li>पहले ग्राहक की तरह रजिस्टर करें, फिर <b>प्रोफ़ाइल → कारीगर बनें</b>। <span class="en">Register normally, then Profile → Become a Worker.</span></li>
+  <li>अपना काम चुनें (एक श्रेणी), अनुभव और अपने बारे में दो लाइन लिखें। <span class="en">Pick your trade, experience, and a short intro.</span></li>
+  <li><b>अपनी फोटो</b> (चेहरा साफ़ दिखे) और <b>ID की फोटो</b> (आधार) दें — ID सिर्फ़ Pamili एडमिन देखता है, कोई ग्राहक नहीं। <span class="en">Add a clear selfie and an ID photo — only the admin ever sees the ID.</span></li>
+  <li>काम के घंटे और अपने इलाक़े चुनें → भेज दें। <span class="en">Set working hours and the areas you serve → submit.</span></li>
+</ol>
+<p>Pamili टीम जाँच करके मंज़ूरी देगी — तब तक ऐप "मंज़ूरी बाकी" दिखाएगा। मंज़ूरी की सूचना ऐप पर आएगी।</p>
+<p class="en">The team verifies and approves you; until then the app shows "pending". You'll be notified on approval.</p>
+
+<h3><span class="n">2</span>अपनी सेवाएँ चालू करें</h3>
+<div class="warn">यह सबसे ज़रूरी क़दम है: <b>जब तक आपने सेवाएँ चालू नहीं कीं, कोई आपको बुक नहीं कर सकता।</b><br><span class="en">Most important step: until you switch services ON, nobody can book you.</span></div>
+<ol class="steps">
+  <li>होम पर <b>मेरी सेवाएँ</b> खोलें। <span class="en">Open My Services from your home.</span></li>
+  <li>जो-जो काम आप करते हैं, उन पर <b>+ चालू करें</b>। दाम Pamili की रेट-सूची से आते हैं (आपके शहर के हिसाब से)। <span class="en">Switch on everything you actually do. Prices come from the Pamili rate card, set for your city.</span></li>
+</ol>
+
+<h3><span class="n">3</span>उपलब्ध / काम पर / ऑफ़लाइन</h3>
+<ul>
+  <li>होम पर ऊपर तीन बटन: <b>उपलब्ध</b> = नए काम आ सकते हैं; <b>ऑफ़लाइन</b> = नहीं आएँगे। <span class="en">Available = bookable; Offline = not.</span></li>
+  <li>छुट्टी चाहिए? <b>"आज काम नहीं"</b> से तारीख़ तक बंद करें — अपने आप वापस चालू हो जाएगा। <span class="en">Day off: "Not taking work today" pauses you until a date, then auto-resumes.</span></li>
+</ul>
+
+<h3><span class="n">4</span>नया अनुरोध आए तो</h3>
+<div class="note">⏱️ जवाब देने के लिए करीब <b>15 मिनट</b> हैं। समय निकल गया तो अनुरोध ख़त्म — और ग्राहक किसी और के पास चला जाएगा। नोटिफ़िकेशन चालू रखें!<br><span class="en">You have ~15 minutes to respond before the request expires and the customer moves on. Keep notifications on!</span></div>
+<ul>
+  <li>अनुरोध में काम, समय-खिड़की, अनुमानित पहुँच और राशि दिखती है। पूरा पता <b>स्वीकारने के बाद</b> खुलता है। <span class="en">You see the work, window, ETA and amount; the full address unlocks after you accept.</span></li>
+  <li>स्वीकारा तो ग्राहक को सूचना जाती है और कॉल बटन खुल जाता है। <span class="en">Accepting notifies the customer and unlocks calling.</span></li>
+  <li>देर हो रही हो तो बुकिंग खोलकर <b>"और समय चाहिए"</b> से नया समय भेजें। <span class="en">Running late? Send a new time from inside the booking.</span></li>
+</ul>
+
+<h3><span class="n">5</span>काम करना — कोड सिस्टम</h3>
+<ol class="steps">
+  <li>ग्राहक के घर पहुँचकर उससे <b>शुरू कोड</b> पूछें और ऐप में भरें — काम शुरू। <span class="en">On arrival, ask for the start code and enter it.</span></li>
+  <li>काम पूरा होने पर <b>ख़त्म कोड</b> पूछकर भरें। <span class="en">When finished, enter the end code.</span></li>
+  <li>अब <b>अंतिम राशि</b> भरें — नाप वाले काम में असली नाप डालें (जैसे 200 वर्ग फ़ुट), ऐप ख़ुद जोड़ लेगा। सामान अलग लगा हो तो वह भी जोड़ें। <span class="en">Then enter the final amount — for measured work, type the real quantity (e.g. 200 sq ft) and the app calculates; add material if any.</span></li>
+  <li>ग्राहक राशि देखकर पक्का करेगा, फिर नक़द या UPI से सीधे आपको देगा। <span class="en">The customer confirms the amount and pays you directly.</span></li>
+</ol>
+<div class="warn">बिना कोड के काम शुरू/ख़त्म मत करें — कोड ही आपका सबूत है कि आप आए और काम पूरा हुआ।<br><span class="en">Never work without the codes — they are your proof of arrival and completion.</span></div>
+
+<h3><span class="n">6</span>पैसे और प्रोफ़ाइल</h3>
+<ul>
+  <li>होम पर <b>आज की कमाई</b> और <b>बकाया वसूली</b> दिखती है। <span class="en">Home shows today's earnings and money still to collect.</span></li>
+  <li>प्रोफ़ाइल में <b>UPI ID</b> जोड़ें ताकि ग्राहक सीधे भेज सकें। <span class="en">Add your UPI ID so customers can pay directly.</span></li>
+  <li>अपने <b>इलाक़े</b> चुने रखें — उन इलाक़ों के ग्राहकों को आप सबसे पहले दिखते हैं। <span class="en">Keep your served areas ticked — those customers see you first.</span></li>
+</ul>
+<div class="note">⏰ बार-बार बिना बताए ग़ैरहाज़िर रहने पर बुकिंग अपने आप बंद हो जाती है और प्रोफ़ाइल पर निशान लगता है — देर हो तो ऐप से नया समय भेजना ही समझदारी है।<br><span class="en">Repeated no-shows auto-close the booking and mark your profile — if late, always send a new time instead.</span></div>
+
+<!-- ================= ADMIN ================= -->
+<h2 class="part" id="admin">🛡️ Admin के लिए <span class="en">Part 3 — For the Admin (owner)</span></h2>
+
+<h3><span class="n">1</span>Panel कहाँ है</h3>
+<ul>
+  <li><b>Phone</b>: apne admin account se app kholte hi Admin home dikhta hai.</li>
+  <li><b>Laptop</b>: <a href="https://avisek-code.github.io/pamili-admin/">avisek-code.github.io/pamili-admin</a> — same login, same data, bade screen par. (Desktop par "Pamili Admin" shortcut bhi yahi kholta hai.)</li>
+</ul>
+
+<h3><span class="n">2</span>Roz ka kaam — Admin home</h3>
+<div class="tablewrap"><table>
+  <tr><th>Card</th><th>Kya karna hai</th></tr>
+  <tr><td><b>Pending approvals</b></td><td>Naye worker: selfie + ID par tap karke <b>full-screen</b> dekhein (Download bhi hai), zaroorat ho to Call/WhatsApp, phir verify level chunkar <b>Approve</b> ya reason ke saath <b>Reject</b>.</td></tr>
+  <tr><td><b>Disputes</b></td><td>Rashi par jhagda: dono ko call karein, phir <b>Resolve</b> (worker sahi) ya <b>Fix amount</b> (nayi rashi, customer dobara confirm karega). Har action par confirm poochha jata hai.</td></tr>
+  <tr><td><b>Stuck jobs</b></td><td>Shuru hokar kabhi khatam na hue kaam — amount bhar ke <b>Done</b> karein ya confirm ke saath cancel.</td></tr>
+  <tr><td><b>Without services</b></td><td>Yeh <b>hamesha 0 hona chahiye</b> — jis worker ki services on nahi, use koi book nahi kar sakta. Worker page kholkar services assign karein.</td></tr>
+</table></div>
+
+<h3><span class="n">3</span>Manage grid</h3>
+<div class="tablewrap"><table>
+  <tr><th>Screen</th><th>Kaam</th></tr>
+  <tr><td><b>Workers &amp; services</b></td><td>Har worker ka page: services on/off ya <b>sab assign</b>, verify level, <b>Work city</b> badalna (customer visibility + us sheher ka price level), served areas, block/unblock, rejected ko wapas lana.</td></tr>
+  <tr><td><b>Users</b></td><td>Search, block/unblock, <b>password reset</b> — naya temporary password milta hai jo seedha user ke WhatsApp par bheja ja sakta hai.</td></tr>
+  <tr><td><b>Catalog</b></td><td>600+ services ke naam/daam/variants; bulk % change bhi. Yaad rahe: daam poore app ke liye badalta hai.</td></tr>
+  <tr><td><b>Areas</b></td><td>Cities on/off, localities (chips se add), rename, aur <b>City price level</b> — ek number jo us sheher ke SARE daam scale karta hai (jaise Lucknow 0.8 = 20% sasta). 0.3–2 ke bahar type nahi hota.</td></tr>
+  <tr><td><b>Banners</b></td><td>Home ki photo-banners — laptop se upload sabse aasan.</td></tr>
+  <tr><td><b>Settings (scheduling)</b></td><td>Response timeout (15 min), travel buffer (30 min — same-day arrival isi se aata hai), time windows, max jobs/window, visiting fee, min order.</td></tr>
+  <tr><td><b>Logs</b></td><td>Har admin action ka record — kaun, kya, kab.</td></tr>
+</table></div>
+
+<h3><span class="n">4</span>Zaroori aadatein</h3>
+<ul>
+  <li><b>SCHEDULING.sql</b>: jab bhi Claude bole "SQL run karo" — Supabase → SQL Editor → poori file paste → Run. Yehi server ke saare rules rakhti hai.</li>
+  <li><b>Crash note</b>: agar kisi phone par app band ho jaye, us phone par Profile → Settings kholein — laal <b>"Last error"</b> row ka screenshot Claude ko bhejein.</li>
+  <li><b>Keystore</b>: Desktop ke <code>PAMILI-KEYSTORE-NEVER-DELETE</code> folder ki copy Google Drive par rakhein — yeh kho gaya to app update karna namumkin hai.</li>
+  <li><b>Demo account</b> (Play Review) kabhi delete na karein — Google isi se app janchta hai.</li>
+</ul>
+
+<footer>
+  Pamili · भरोसेमंद कारीगर, मिनटों में · Help: WhatsApp +91 76670 80324<br>
+  Manual v2.0 — 18 Aug 2026. App version 2.0 ke hisab se likha gaya.
+</footer>
+
+</div>
